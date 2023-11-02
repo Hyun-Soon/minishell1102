@@ -6,7 +6,7 @@
 /*   By: hyuim <hyuim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 21:11:37 by hyuim             #+#    #+#             */
-/*   Updated: 2023/10/28 16:45:47 by hyuim            ###   ########.fr       */
+/*   Updated: 2023/11/02 18:10:12 by hyuim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,13 @@ int	pwd()
 	}
 	if (!getcwd(cwd, PATH_MAX))
 	{
-		perror(NULL);
+		free(cwd);
+		if (write(STDERR_FILENO, "current directory would be deleted.\n", 36) == -1)
+			ft_error("", 1);
 		return (1);
 	}
 	if (write(STDERR_FILENO, cwd, ft_strlen(cwd))== -1 || write(STDERR_FILENO, "\n", 1) == -1)
-	{
-		perror(NULL);
-		return (1);
-	}
+		ft_error("", 1);
 	free(cwd);
 	return (0);
 }
